@@ -92,7 +92,6 @@
                         <th>Cantidad</th>
                         <th>P. Unitario</th>
                         <th>Total</th>
-                        <th>SubTotal</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,11 +101,14 @@
                         <td>{{ detalle.cantidad }}</td>
                         <td>S/ {{ detalle.precio|floatformat:2 }}</td>
                         <td class="text-right">S/ {{ detalle.cantidad|floatformat:2 }} x S/ {{ detalle.precio|floatformat:2 }}</td>
-                        <td class="text-right">S/ {{ venta.subTotal|floatformat:2 }}</td>
+                        
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+        <div class="total">
+            <p><strong>Subtotal: S/ S/ {{ venta.subTotal|floatformat:2 }}</strong></p>
         </div>
         <div class="total">
             <p><strong>IGV (18%): S/ {{ venta.igv|floatformat:2 }}</strong></p>
