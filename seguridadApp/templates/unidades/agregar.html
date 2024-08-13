@@ -1,24 +1,22 @@
-{% extends "home.html" %}
+{% extends 'home.html' %}
 {% block content %}
- {% load crispy_forms_tags %}
-<div class="container">
- <div class="card card-info mx-4 my-4">
- <div class="card-header">
- <h1 class="card-title">AGREGAR UNIDAD</h1>
-</div>
- <div class="card-body">
- <form method="post">
- {% csrf_token %}
- {{ form | crispy}}
- <div class="d-flex justify-content-end">
- <a href="{% url 'listarunidad' %}" class="btn
-btnsecondary">Cancelar</a> &nbsp;
-<button type="submit" class="btn
-btnprimary">Guardar</button>
- </div>
-</form>
- </div>
- </div>
-</div>
-</div>
-{% endblock%} 
+  {% load crispy_forms_tags %}
+  <div class="container pt-5">
+    <div class="card card-dark" style="background-color: #D1D1D1;">
+      <div class="card-header">
+        <h1 class="card-title h1">AGREGAR UNIDAD</h1>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'listarunidad' %}" class="btn btn-secondary">Cancelar</a>
+            &nbsp;
+            <button type="submit" class="btn btn-dark">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
