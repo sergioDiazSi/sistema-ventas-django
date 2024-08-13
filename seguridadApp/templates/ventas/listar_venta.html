@@ -1,0 +1,44 @@
+{% extends "home.html" %}
+{% block content %}
+<div class="container">
+    <h2>Listado de Ventas</h2>
+
+    <div class="mb-3">
+        <a href="{% url 'registrarventa' %}" class="btn btn-primary">Registrar Venta</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID Venta</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Sub Total</th>
+                <th>IGV</th>
+                <th>Total</th>
+                <th>Acciones</th> <!-- Nueva columna para acciones -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for venta in ventas %}
+                <tr>
+                    <td>{{ venta.id }}</td>
+                    <td>{{ venta.fechaVenta|date:"d/m/Y" }}</td>
+                    <td>{{ venta.idCliente.nombres }}</td>
+                    <td>{{ venta.subTotal|floatformat:2 }}</td>
+                    <td>{{ venta.igv|floatformat:2 }}</td>
+                    <td>{{ venta.total|floatformat:2 }}</td>
+                    <td>
+                        <!-- Botón para generar PDF -->
+                        <a href="{% url 'generar_pdf' venta.id %}" class="btn btn-secondary">Generar PDF</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">No hay ventas registradas.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

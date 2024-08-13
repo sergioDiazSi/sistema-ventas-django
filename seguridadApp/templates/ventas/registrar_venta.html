@@ -1,0 +1,225 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Registrar Venta</h2>
+    <form method="post" action="{% url 'registrarventa' %}">
+        {% csrf_token %}
+        
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="fecha">Fecha de Venta</label>
+                    <input type="date" id="fecha" name="fecha_venta" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="tipo">Tipo de Documento</label>
+                    <select id="tipo" name="tipo_documento" class="form-control" required>
+                        {% for tipo in tipos %}
+                            <option value="{{ tipo.id }}">{{ tipo.descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="parametro">Numero de documento</label>
+                    <select id="parametro" name="parametro" class="form-control" required>
+                        {% for parametro in parametros %}
+                            <option value="{{ parametro.id }}" data-serie="{{ parametro.serie }}" data-nrodoc="{{ parametro.nroDoc }}">
+                                {{ parametro.serie }} - {{ parametro.nroDoc }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cliente">Cliente</label>
+                    <select id="cliente" name="cliente" class="form-control" required>
+                        <option value="">Seleccione un cliente</option>
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}" data-rucdni="{{ cliente.rucDni }}" data-direccion="{{ cliente.direccion }}">
+                                {{ cliente.nombres }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="rucdni">DNI/RUC</label>
+                    <input type="text" id="rucdni" name="rucdni" class="form-control" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" name="direccion" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="producto">Producto</label>
+                    <select id="producto" name="producto" class="form-control">
+                        <option value="">Seleccione un producto</option>
+                        {% for producto in productos %}
+                            <option value="{{ producto.id }}" data-unidad="{{ producto.idUnidad.descripcion }}" data-precio="{{ producto.precio }}">
+                                {{ producto.descripcion }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="unidad">Unidad</label>
+                    <input type="text" id="unidad" name="unidad" class="form-control" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" id="precio" name="precio" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" id="cantidad" name="cantidad" class="form-control" min="1">
+                </div>
+            </div>
+        </div>
+
+        <button type="button" id="add_to_cart" class="btn btn-primary mb-3">Añadir al Carrito</button>
+
+        <hr>
+
+        <h3 class="mb-3">Carrito</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Unidad</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="cart_items">
+                <!-- Items del carrito serán añadidos aquí por JS -->
+            </tbody>
+        </table>
+
+        <!-- Campos ocultos para enviar datos del carrito -->
+        <input type="hidden" name="subtotal" id="subtotal">
+        <input type="hidden" name="igv" id="igv">
+        <input type="hidden" name="total" id="total">
+
+        <button type="submit" class="btn btn-success">Vender</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('cliente').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        document.getElementById('rucdni').value = selectedOption.getAttribute('data-rucdni');
+        document.getElementById('direccion').value = selectedOption.getAttribute('data-direccion');
+    });
+
+    document.getElementById('producto').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        document.getElementById('unidad').value = selectedOption.getAttribute('data-unidad');
+        document.getElementById('precio').value = selectedOption.getAttribute('data-precio');
+    });
+
+    const cartItems = [];
+    const cartTableBody = document.getElementById('cart_items');
+
+    document.getElementById('add_to_cart').addEventListener('click', function () {
+        const productSelect = document.getElementById('producto');
+        const productId = productSelect.value;
+        const productName = productSelect.options[productSelect.selectedIndex].text;
+        const productUnit = document.getElementById('unidad').value;
+        const productPrice = parseFloat(document.getElementById('precio').value);
+        const productQty = parseInt(document.getElementById('cantidad').value);
+
+        if (!productId || !productQty) {
+            alert('Seleccione un producto y cantidad válida');
+            return;
+        }
+
+        const total = productPrice * productQty;
+
+        const cartItem = {
+            id: productId,
+            name: productName,
+            unit: productUnit,
+            price: productPrice,
+            qty: productQty,
+            total: total
+        };
+
+        cartItems.push(cartItem);
+        renderCartItems();
+    });
+
+    function renderCartItems() {
+        cartTableBody.innerHTML = '';
+        let subtotal = 0;
+
+        cartItems.forEach((item, index) => {
+            subtotal += item.total;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>
+                    <input type="hidden" name="producto_id" value="${item.id}">
+                    ${item.name}
+                </td>
+                <td>${item.unit}</td>
+                <td>
+                    <input type="hidden" name="cantidad" value="${item.qty}">
+                    ${item.qty}
+                </td>
+                <td>${item.price.toFixed(2)}</td>
+                <td>${item.total.toFixed(2)}</td>
+                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeCartItem(${index})">Eliminar</button></td>
+            `;
+            cartTableBody.appendChild(row);
+        });
+
+        const igv = subtotal * 0.18;
+        const total = subtotal + igv;
+
+        document.getElementById('subtotal').value = subtotal.toFixed(2);
+        document.getElementById('igv').value = igv.toFixed(2);
+        document.getElementById('total').value = total.toFixed(2);
+    }
+
+    function removeCartItem(index) {
+        cartItems.splice(index, 1);
+        renderCartItems();
+    }
+</script>
+{% endblock %}

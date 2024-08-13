@@ -1,0 +1,111 @@
+{% extends "home.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="card card-info mx-4 my-4">
+        <div class="card-header">
+            <h1 class="card-title">AGREGAR CLIENTE</h1>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-flex justify-content-end">
+                    <button type="button" id="btn_consulta_sunat" class="btn btn-primary">Consultar SUNAT</button>
+                    &nbsp;
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const documentTypeField = document.getElementById('id_document_type');
+        const documentNumberField = document.getElementById('id_rucDni');
+        const nameField = document.getElementById('id_nombres');
+        const addressField = document.getElementById('id_direccion');
+
+        documentTypeField.addEventListener('change', function () {
+            if (this.value === 'dni') {
+                documentNumberField.maxLength = 8;
+                documentNumberField.placeholder = 'Ingrese 8 dígitos';
+            } else if (this.value === 'ruc') {
+                documentNumberField.maxLength = 11;
+                documentNumberField.placeholder = 'Ingrese 11 dígitos';
+            }
+        });
+
+        document.getElementById('btn_consulta_sunat').addEventListener('click', function() {
+            const documentNumber = documentNumberField.value;
+            const documentType = documentTypeField.value;
+
+            if ((documentType === 'dni' && documentNumber.length === 8) ||
+                (documentType === 'ruc' && documentNumber.length === 11)) {
+
+                Swal.fire({
+                    title: 'Consultar',
+                    text: "¿Desea consultar el documento en SUNAT?",
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: "#696cff",
+                    confirmButtonText: 'Sí, Confirmar',
+                    cancelButtonText: "No, Cancelar",
+                    showLoaderOnConfirm: true,
+                    preConfirm: function() {
+                        const url = `/consultar/${documentType}/${documentNumber}/`;
+                        return fetch(url, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            }
+                        }).then(response => response.json())
+                          .catch(error => {
+                              console.error('Error al consultar la API:', error);
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'Error',
+                                  text: 'Hubo un problema al consultar la API.'
+                              });
+                          });
+                    },
+                    allowOutsideClick: function() {
+                        return !Swal.isLoading();
+                    }
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        const data = result.value;
+                        if (data.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'No se pudo obtener la información!'
+                            });
+                        } else {
+                            nameField.value = data.nombre_completo;
+                            addressField.value = data.direccion;
+                        }
+                    }
+                }).catch(function(error) {
+                    console.error('Error al consultar la API:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al consultar la API.'
+                    });
+                });
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El número de documento no es válido.'
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

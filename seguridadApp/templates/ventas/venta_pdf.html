@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Boleta de Venta N° {{ venta.id }}</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+        .boleta {
+            width: 80mm;
+            padding: 10mm;
+            border: 1px solid #ccc;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .logo img {
+            width: 50mm;
+        }
+        .info-empresa {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .info-cliente, .info-venta, .info-detalles {
+            margin-bottom: 10px;
+        }
+        .info-cliente p, .info-venta p, .info-detalles p {
+            margin: 2px 0;
+            font-size: 12px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .table th, .table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: left;
+            font-size: 12px;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+        .total {
+            text-align: right;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    
+</head>
+<body class="">
+    <div class="">
+        <div class="logo">
+            <img src="./AdminLTELogo.png" alt="Logo Empresa">
+        </div>
+        <h1>Boleta de Venta N° {{ venta.id }}</h1>
+        <div class="info-empresa">
+            <p><strong>AdminLTE S.A.C.</strong></p>
+            <p>RUC: 12345678901</p>
+            <p>Mz.1 Lte.14 Urb. Los Portales de Belén</p>
+            <p>Teléfono: (01) 234-5678</p>
+        </div>
+        <div class="info-cliente">
+            <p><strong>Cliente:</strong> {{ venta.idCliente.nombres }}</p>
+            <p><strong>DNI:</strong> {{ venta.idCliente.rucDni }}</p>
+        </div>
+        <div class="info-venta">
+            <p><strong>Fecha:</strong> {{ venta.fechaVenta|date:"d/m/Y" }}</p>
+            <p><strong>Tipo de Pago:</strong> Efectivo</p>
+        </div>
+        <div class="info-detalles">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>P. Unitario</th>
+                        <th>Total</th>
+                        <th>SubTotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in detalles %}
+                    <tr>
+                        <td>{{ detalle.idProducto.descripcion }}</td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>S/ {{ detalle.precio|floatformat:2 }}</td>
+                        <td class="text-right">S/ {{ detalle.cantidad|floatformat:2 }} x S/ {{ detalle.precio|floatformat:2 }}</td>
+                        <td class="text-right">S/ {{ venta.subTotal|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="total">
+            <p><strong>IGV (18%): S/ {{ venta.igv|floatformat:2 }}</strong></p>
+        </div>
+        <div class="total">
+            <p><strong>Total a pagar: S/ {{ venta.total|floatformat:2 }}</strong></p>
+        </div>
+    </div>
+</body>
+</html>

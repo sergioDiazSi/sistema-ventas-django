@@ -1,0 +1,26 @@
+{% extends "home.html" %}
+{% block content %}
+ {% load crispy_forms_tags %}
+<div class="container">
+ <div class="card card-info mx-4 my-4">
+ <div class="card-header">
+ <h1 class="card-title">EDITAR UNIDAD</h1>
+ </div>
+ <div class="card-body">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form | crispy}}
+       
+        <div class="d-flex justify-content-end">
+        <a href="{% url 'listarunidad' %}" class="btn
+       btnsecondary">Cancelar</a>
+        &nbsp;
+       <button type="submit" class="btn
+       btnprimary">Actualizar</button>
+        </div>
+       </form>
+        </div>
+        </div>
+       </div>
+       </div>
+       {% endblock%} 
