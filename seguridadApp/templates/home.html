@@ -1,184 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     {% load static %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> {% block title %} {% endblock %}</title>
-    <link rel="stylesheet" href="{% static '/adminlte/plugins/fontawesomefree/css/all.min.css'  %}">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      {% block title %}
+
+      {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static '/adminlte/plugins/fontawesomefree/css/all.min.css' %}" />
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static '/adminlte/plugins/fontawesomefree/css/all.min.css'  %}">
+    <link rel="stylesheet" href="{% static '/adminlte/plugins/fontawesomefree/css/all.min.css' %}" />
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'shop/lib/animate/animate.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'shop/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'shop/css/style.css' %}" rel="stylesheet" />
 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{% static '/adminlte/dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static '/adminlte/dist/css/adminlte.min.css' %}" />
+  </head>
 
-
-</head>
-
-<body class="hold-transition sidebar-mini">
+  <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Left navbar links -->
-            <ul class="navbar-nav">
-                <li class="nav-item"> <a class="nav-link" datawidget="pushmenu" href="#" role="button"><i class="fas fa
-bars"></i></a> </li>
-            </ul>
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" datawidget="pushmenu" href="#" role="button"><i class="fas fa bars"></i></a>
+          </li>
+        </ul>
 
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <!-- Messages Dropdown Menu -->
+          <!-- Notifications Dropdown Menu -->
 
-            <!-- Right navbar links -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Messages Dropdown Menu -->
-                <!-- Notifications Dropdown Menu -->
+          <li class="nav-item">
+            <a href="" class="btn-danger btn-block"><i class="fa fa-poweroff"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.navbar -->
 
-                <li class="nav-item">
-                    <a href="" class="btn-danger btn-block"><i class="fa fa-poweroff"></i></a>
-                </li>
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="{% url 'home' %}" class="brand-link">
+          <img src="https://images.vexels.com/media/users/3/223412/isolated/preview/bd3704cf52ba23499660b8bae7221daf-dise-o-plano-de-icono-de-tienda.png" alt="logo" class="brand-image" style="opacity: .8" />
+          <span class="brand-text font-weight-light">Tiendas SS</span>
+        </a>
 
-
-            </ul>
-        </nav>
-        <!-- /.navbar -->
-
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="../../index3.html" class="brand-link">
-                <img src="/adminlte/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-                    class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">AdminLTE 3</span>
-            </a>
-
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="/adminlte/dist/img/user2-160x160.jpg" class="imgcircle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
-                </div>
-
-                <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                      <!-- Add icons to the links using the .nav-icon class
-                           with font-awesome or any other icon font library -->
-                      <li class="nav-item">
-                        <a href="#" class="nav-link">
-                          <i class="nav-icon fas fa-tachometer-alt"></i>
-                          <p>
-                            Mantenedor
-                            <i class="right fas fa-angle-left"></i>
-                          </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="{% url 'listarcategoria' %}" class="nav-link">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Categorias</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="{% url 'listarunidad' %}" class="nav-link">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Unidades</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="{% url 'listarproducto' %}" class="nav-link">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Productos</p>
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="{% url 'listarcliente' %}" class="nav-link">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Clientes</p>
-                            </a>
-                          </li>
-                        </ul>
-                      </li>
-              
-                      
-                      <li class="nav-item">
-                        <a href="#" class="nav-link">
-                          <i class="nav-icon fas fa-chart-pie"></i>
-                          <p>
-                            Proceso
-                            <i class="right fas fa-angle-left"></i>
-                          </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                          <li class="nav-item">
-                            <a href="{% url 'listarventas' %}" class="nav-link">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Venta</p>
-                            </a>
-                          </li>
-                          
-                        </ul>
-                      </li>
-                        
-            
-            
-            
-                    </ul>
-                  </nav>
-                <!-- /.sidebar-menu -->
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <!-- Sidebar user (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" class="imgcircle" alt="User Image" />
             </div>
-            <!-- /.sidebar -->
-        </aside>
+            <div class="info">
+              <a href="#" class="d-block">{{ user }}</a>
+            </div>
+          </div>
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <!--                                                                       Add icons to the links using the .nav-icon class
+                           with font-awesome or any other icon font library                                                                               -->
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="bi bi-1-circle"></i>
+                  <p>
+                    Mantenedor
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{% url 'listarcategoria' %}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Categorias</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'listarunidad' %}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Unidades</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'listarproducto' %}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Productos</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'listarcliente' %}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Clientes</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
 
-
-            <!-- Main content -->
-            <section class="content">
-                {% block content %}
-                {% endblock %}
-            </section>
-            <!-- /.content -->
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-chart-pie"></i>
+                  <p>
+                    Proceso
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{% url 'listarventas' %}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Venta</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
         </div>
-        <!-- /.content-wrapper -->
+        <!-- /.sidebar -->
+      </aside>
 
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.1.0-rc
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <div class="row mx-5 pt-5">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-6 product-offer" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/a0/a9/13/a0a913bc468bbb02214a749a9bda3514.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Categorías</h3>
+                  <a href="{% url 'listarcategoria' %}" class="btn btn-dark text-white">Ingresa</a>
+                </div>
+              </div>
+              <div class="col-6 product-offer" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/c1/b2/67/c1b2678e00776bca3585f35adadea2f5.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Unidades</h3>
+                  <a href="{% url 'listarunidad' %}" class="btn btn-dark" style="color: #fff;">Ingresa</a>
+                </div>
+              </div>
             </div>
-            <strong>Copyright &copy; 2014-
-                2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-        </footer>
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
+            <div class="row">
+              <div class="col-6 product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/df/e1/d4/dfe1d425424139bdbb03454c249a2726.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Clientes</h3>
+                  <a href="{% url 'listarcliente' %}" class="btn btn-dark text-white">Ingresa</a>
+                </div>
+              </div>
+              <div class="col-6 product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/13/c3/2c/13c32cbc3e656a88679bdd0b55a79f3c.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Productos</h3>
+                  <a href="{% url 'listarproducto' %}" class="btn btn-dark text-white">Ingresa</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="carousel-inner">
+              <div class="carousel-item position-relative active" style="height: 400px;">
+                <img class="position-absolute w-100 h-100" src="https://i.pinimg.com/564x/11/3b/00/113b00df08d2831d02b6c7978ebca2fb.jpg" style="object-fit: cover;" />
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                  <div class="p-3" style="max-width: 700px;">
+                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Ventas</h1>
+                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Nuestros productos están diseñados para ofrecer la mejor calidad</p>
+                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="{% url 'listarventas' %}">Compra Ahora</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="content">
+          {% block content %}
+
+          {% endblock %}
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+
+      <footer class="main-footer"></footer>
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
     <!-- AdminLTE App -->
-    <script src="{% static '/adminlte/dist/js/adminlte.min.js'  %}"></script>
+    <script src="{% static '/adminlte/dist/js/adminlte.min.js' %}"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{% static '/adminlte/dist/js/demo.js'  %}"></script>
-    {% block js%}
-    {% endblock %}
-</body>
+    <script src="{% static '/adminlte/dist/js/demo.js' %}"></script>
+    {% block js %}
 
+    {% endblock %}
+  </body>
 </html>
