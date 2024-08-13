@@ -1,27 +1,9 @@
 from django.contrib import messages
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
-from .models import (
-    Categoria,
-    Unidad,
-    Producto,
-    Cliente,
-    Tipo,
-    CabeceraVenta,
-    DetalleVenta,
-    Parametros,
-)
-from django.db.models import Q
-from .forms import (
-    CategoriaForm,
-    UnidadForm,
-    ProductoForm,
-    ClienteForm,
-    TipoForm,
-    CabeceraVentaForm,
-    DetalleVentaForm,
-    ParametrosForm,
-)
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Categoria, Unidad, Producto, Cliente,Tipo, CabeceraVenta, DetalleVenta, Parametros
+from django.db.models import Q 
+from .forms import CategoriaForm, UnidadForm, ProductoForm, ClienteForm, TipoForm, CabeceraVentaForm, DetalleVentaForm, ParametrosForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
@@ -29,6 +11,13 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 
 # Create your views here.
+
+def eliminar_venta(request, id):
+    venta = DetalleVenta.objects.get(id=id) 
+    venta2 = CabeceraVenta.objects.get(id=id)
+    venta.delete()
+    venta2.delete()
+    return redirect('listarventas')  # Cambia 'listar_ventas' por el nombre de la vista donde se lista las ventas
 
 
 def generar_pdf(request, venta_id):

@@ -1,6 +1,6 @@
 
 from django.urls import path,include 
-from .views import acceder,homePage, listarcategoria, agregarcategoria,editarcategoria,eliminarcategoria, listarunidad, agregarunidad, editarunidad, eliminarunidad, listarproducto, agregarproducto, editarproducto, eliminarproducto, listarcliente, agregarcliente, editarcliente, eliminarcliente, registrarventa, listarventas,clienteinfo,productoinfo,generar_pdf,consultar_documento
+from .views import acceder,homePage, listarcategoria, agregarcategoria,editarcategoria,eliminarcategoria, listarunidad, agregarunidad, editarunidad, eliminarunidad, listarproducto, agregarproducto, editarproducto, eliminarproducto, listarcliente, agregarcliente, editarcliente, eliminarcliente, registrarventa, listarventas,clienteinfo,productoinfo,generar_pdf,consultar_documento,eliminar_venta
 from django.contrib.auth import views 
 # from django.contrib.auth import views
 urlpatterns = [     
@@ -28,6 +28,7 @@ urlpatterns = [
     path('productoinfo/', productoinfo, name='productoinfo'),
     path('generar_pdf/<int:venta_id>/', generar_pdf, name='generar_pdf'), 
     path('consultar/<str:document_type>/<str:document_number>/', consultar_documento, name='consultar_documento'),
+    path('eliminar_venta/<int:id>/', eliminar_venta, name='eliminar_venta'),
 ] 
 
 
