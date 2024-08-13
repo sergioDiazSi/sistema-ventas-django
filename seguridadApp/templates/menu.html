@@ -79,8 +79,8 @@
           <!-- Sidebar Menu -->
           <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <!--                                                                                                                       Add icons to the links using the .nav-icon class
-                           with font-awesome or any other icon font library                                                                                                                               -->
+              <!--                                                                                                                     Add icons to the links using the .nav-icon class
+                           with font-awesome or any other icon font library                                                                                                                             -->
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-solid fa-clipboard"></i>
@@ -142,8 +142,63 @@
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper" style="background-color: rgb(158, 158, 158);">
+      <div class="content-wrapper" style="background-color: #D1D1D1;">
         <!-- Content Header (Page header) -->
+
+        <div class="row mx-5 pt-5">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-6 product-offer" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/a0/a9/13/a0a913bc468bbb02214a749a9bda3514.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Categorías</h3>
+                  <a href="{% url 'listarcategoria' %}" class="btn btn-dark text-white">Ingresa</a>
+                </div>
+              </div>
+              <div class="col-6 product-offer" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/c1/b2/67/c1b2678e00776bca3585f35adadea2f5.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Unidades</h3>
+                  <a href="{% url 'listarunidad' %}" class="btn btn-dark" style="color: #fff;">Ingresa</a>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/df/e1/d4/dfe1d425424139bdbb03454c249a2726.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Clientes</h3>
+                  <a href="{% url 'listarcliente' %}" class="btn btn-dark text-white">Ingresa</a>
+                </div>
+              </div>
+              <div class="col-6 product-offer mb-30" style="height: 200px;">
+                <img class="img-fluid" src="https://i.pinimg.com/564x/13/c3/2c/13c32cbc3e656a88679bdd0b55a79f3c.jpg" alt="" />
+                <div class="offer-text">
+                  <h6 class="text-white text-uppercase">Mantenedor</h6>
+                  <h3 class="text-white mb-3">Productos</h3>
+                  <a href="{% url 'listarproducto' %}" class="btn btn-dark text-white">Ingresa</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="carousel-inner">
+              <div class="carousel-item position-relative active" style="height: 400px;">
+                <img class="position-absolute w-100 h-100" src="https://i.pinimg.com/564x/11/3b/00/113b00df08d2831d02b6c7978ebca2fb.jpg" style="object-fit: cover;" />
+                <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                  <div class="p-3" style="max-width: 700px;">
+                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Ventas</h1>
+                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Nuestros productos están diseñados para ofrecer la mejor calidad</p>
+                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="{% url 'listarventas' %}">Compra Ahora</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Main content -->
         <section class="content">
